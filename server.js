@@ -7,7 +7,7 @@ const app = express();
 
 // const connectDB = require('./src/db/connect')
 
-// const productRoute = require('./src/router/router')
+const appRoute = require('./src/router/router')
 
 // Error Handling
 const notFoundMiddleware = require("./src/middleware/not-found");
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.static('./public'))
 
 // Route
-// app.use('/products', productRoute )
+app.use('/', appRoute )
 // app.get("/", (req, res) => {
 // 	res.send("STORE IS OPEN");
 // });
