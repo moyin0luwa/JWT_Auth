@@ -1,4 +1,11 @@
+const CustomAPIError = require('../errors/custom-error')
+
 const login = async (req, res) => {
+	const { username, password } = req.body;
+	if (!username || !password) {
+		throw new CustomAPIError('Please provide valid credentials', 400)
+	}
+	console.log(username, "|", password);
 	res.send("Fake Login route");
 };
 
@@ -14,4 +21,3 @@ module.exports = {
 	login,
 	dashboard,
 };
- 
