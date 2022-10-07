@@ -1,7 +1,7 @@
 //Authentication Middleware which perfroms the functionality of authencicating a user before giving the user access to the route.
 //The authentication process is basically the validating, verifying and decoding of the token sent
 const jwt = require("jsonwebtoken");
-const CustomAPIError = require("../errors/custom-error");
+const { UnauthenticatedError } = require("../errors");
 require("dotenv").config();
 
 const authMiddleware = async (req,res,next) => {
@@ -9,7 +9,7 @@ const authMiddleware = async (req,res,next) => {
 	const authHeader = req.headers.authorization;
 	//Then we validate the token sent
 	if (!authHeader || !authHeader.startsWith("Bearer ")) {
-		throw new CustomAPIError("Invalid credentials to access this route", 401);
+		throw new UnauthenticatedError("Invalid credentials to access this route");
 	}
 	const token = authHeader.split(" ")[1];
 
@@ -20,7 +20,7 @@ const authMiddleware = async (req,res,next) => {
         req.user = { id, username }
         next() //Keeps the cycle going i.e handing over to the next middleware, a controller in this case
 	} catch (error) {
-		throw new CustomAPIError("Not Authorised to access this route", 401);
+		throw new UnauthenticatedError("Not Authorised to access this route");
 	}
 
 }
